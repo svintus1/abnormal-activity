@@ -20,8 +20,7 @@ func main() {
 		return
 	}
 	fmt.Printf("%sProcesses in Unusual Paths\n", tags.Info)
-	cmd := exec.Command("cp", filepath.Join("assets", fileName), path)
-	err := cmd.Run()
+	err := system.CopyFile(filepath.Join("assets", fileName), path, 0755)
 	if err != nil {
 		fmt.Printf("%sError when copying a binary file\n", tags.Err)
 		return
@@ -31,7 +30,7 @@ func main() {
 		os.Remove(absPath)
 		fmt.Printf("%sFile %s removed\n", tags.Log, absPath)
 	}()
-	cmd = exec.Command(absPath)
+	cmd := exec.Command(absPath)
 	err = cmd.Run()
 	if err != nil {
 		fmt.Printf("%sError when executing a binary file\n", tags.Err)
