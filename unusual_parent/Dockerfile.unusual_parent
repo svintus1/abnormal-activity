@@ -2,8 +2,8 @@ FROM golang:1.24.3-alpine AS build
 WORKDIR /opt/app
 COPY ./pkg ./pkg
 COPY ./go.mod ./go.mod
-COPY ./cmd/unusual_parent/main.go ./cmd/unusual_parent/main.go
-RUN go build -o unusual_parent ./cmd/unusual_parent/main.go
+COPY ./main.go ./main.go
+RUN go build -o unusual_parent ./main.go
 
 FROM debian:bookworm
 WORKDIR /opt/app

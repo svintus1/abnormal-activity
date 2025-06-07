@@ -2,8 +2,8 @@ FROM golang:1.24.3-alpine AS build
 WORKDIR /opt/app
 COPY ./pkg ./pkg
 COPY ./go.mod ./go.mod
-COPY ./cmd/hidden_file_and_dir/main.go ./cmd/hidden_file_and_dir/main.go
-RUN go build -o hidden_file_and_dir ./cmd/hidden_file_and_dir/main.go
+COPY ./main.go ./main.go
+RUN go build -o hidden_file_and_dir ./main.go
 
 FROM debian:bookworm
 WORKDIR /opt/app

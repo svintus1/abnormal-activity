@@ -2,8 +2,8 @@ FROM golang:1.24.3-alpine AS build
 WORKDIR /opt/app
 COPY ./pkg ./pkg
 COPY ./go.mod ./go.mod
-COPY ./cmd/clear_command_history/main.go ./cmd/clear_command_history/main.go
-RUN go build -o clear_command_history ./cmd/clear_command_history/main.go
+COPY ./main.go ./main.go
+RUN go build -o clear_command_history ./main.go
 
 FROM debian:bookworm
 WORKDIR /opt/app

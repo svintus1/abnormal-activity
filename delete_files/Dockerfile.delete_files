@@ -2,8 +2,8 @@ FROM golang:1.24.3-alpine AS build
 WORKDIR /opt/app
 COPY ./pkg ./pkg
 COPY ./go.mod ./go.mod
-COPY ./cmd/delete_files/main.go ./cmd/delete_files/main.go
-RUN go build -o delete_files ./cmd/delete_files/main.go
+COPY ./main.go ./main.go
+RUN go build -o delete_files ./main.go
 
 FROM debian:bookworm
 WORKDIR /opt/app

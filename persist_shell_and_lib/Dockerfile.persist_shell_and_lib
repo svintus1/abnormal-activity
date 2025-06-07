@@ -2,8 +2,8 @@ FROM golang:1.24.3-alpine AS build
 WORKDIR /opt/app
 COPY ./pkg ./pkg
 COPY ./go.mod ./go.mod
-COPY ./cmd/persist_shell_and_lib/main.go ./cmd/persist_shell_and_lib/main.go
-RUN go build -o persist_shell_and_lib ./cmd/persist_shell_and_lib/main.go
+COPY ./main.go ./main.go
+RUN go build -o persist_shell_and_lib ./main.go
 
 FROM debian:bookworm
 WORKDIR /opt/app

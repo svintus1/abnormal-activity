@@ -2,8 +2,8 @@ FROM golang:1.24.3-alpine AS build
 WORKDIR /opt/app
 COPY ./pkg ./pkg
 COPY ./go.mod ./go.mod
-COPY ./cmd/pw_search/main.go ./cmd/pw_search/main.go
-RUN go build -o pw_search ./cmd/pw_search/main.go
+COPY ./main.go ./main.go
+RUN go build -o pw_search ./main.go
 
 FROM debian:bookworm
 WORKDIR /opt/app
