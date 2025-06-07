@@ -5,7 +5,7 @@ on:
     branches: [ main ]
     
 jobs:
-  build:
+  delivery:
     runs-on: [ self-hosted ]
     steps:
       - name: Синхронизация проекта с репозиторием
@@ -13,4 +13,4 @@ jobs:
 
       - name: Копирование акутальной версии проекта в удобную директорию
         run: |
-          rsync -a --delete ${{ github.workspace }} /home/user/abnormal-activity
+          rsync -a --delete ${{ github.workspace }} /home/user/
