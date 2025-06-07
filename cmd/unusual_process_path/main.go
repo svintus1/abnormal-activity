@@ -20,7 +20,7 @@ func main() {
 		return
 	}
 	fmt.Printf("%sProcesses in Unusual Paths\n", tags.Info)
-	err := system.CopyFile(filepath.Join("assets", fileName), path, 0755)
+	err := system.CopyFile(filepath.Join("assets", fileName), filepath.Join(path, fileName), 0755)
 	if err != nil {
 		fmt.Printf("%sError when copying a binary file\n", tags.Err)
 		return
