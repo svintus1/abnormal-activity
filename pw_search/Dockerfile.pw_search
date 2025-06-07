@@ -1,0 +1,12 @@
+FROM golang:1.24.3-alpine AS build
+WORKDIR /opt/app
+COPY ./pkg ./pkg
+COPY ./go.mod ./go.mod
+COPY ./main.go ./main.go
+RUN go build -o pw_search ./main.go
+
+FROM debian:bookworm
+WORKDIR /opt/app
+COPY --from=build /opt/app/pw_search ./pw_search
+ENTRYPOINT [ "./pw_search" ]
+CMD [ "--src=/host" ]

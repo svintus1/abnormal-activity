@@ -1,0 +1,12 @@
+FROM golang:1.24.3-alpine AS build
+WORKDIR /opt/app
+COPY ./pkg ./pkg
+COPY ./go.mod ./go.mod
+COPY ./main.go ./main.go
+RUN go build -o unusual_process_path ./main.go
+
+FROM debian:bookworm
+WORKDIR /opt/app
+COPY ./assets/myapp ./assets/myapp
+COPY --from=build /opt/app/unusual_process_path ./unusual_process_path
+ENTRYPOINT [ "./unusual_process_path" ]

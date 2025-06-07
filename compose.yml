@@ -2,65 +2,65 @@ services:
   clear_command_history:
     container_name: clear_command_history
     build:
-      context: ./
+      context: ./clear_command_history
       dockerfile: Dockerfile.clear_command_history
 
   delete_files:
     container_name: delete_files
     build:
-      context: ./
+      context: ./delete_files
       dockerfile: Dockerfile.delete_files
 
   hidden_file_and_dir:
     container_name: hidden_file_and_dir
     build:
-      context: ./
+      context: ./hidden_file_and_dir
       dockerfile: Dockerfile.hidden_file_and_dir
 
   http_get_request:
     container_name: http_get_request
     build:
-      context: ./
+      context: ./http_get_request
       dockerfile: Dockerfile.http_get_request
 
   log_clear:
     container_name: log_clear
     build:
-      context: ./
+      context: ./log_clear
       dockerfile: Dockerfile.log_clear
 
   path_interception:
     container_name: path_interception
     build:
-      context: ./
+      context: ./path_interception
       dockerfile: Dockerfile.path_interception
 
   persist_shell_and_lib:
     container_name: persist_shell_and_lib
     build:
-      context: ./
+      context: ./persist_shell_and_lib
       dockerfile: Dockerfile.persist_shell_and_lib
 
   process_extension_anomalies:
     container_name: process_extension_anomalies
     build:
-      context: ./
+      context: ./process_extension_anomalies
       dockerfile: Dockerfile.process_extension_anomalies
 
   pw_search:
     container_name: pw_search
     build:
-      context: ./
+      context: ./pw_search
       dockerfile: Dockerfile.pw_search
 
   unusual_parent:
     container_name: unusual_parent
     build:
-      context: ./
+      context: ./unusual_parent
       dockerfile: Dockerfile.unusual_parent
 
   unusual_process_path:
     container_name: unusual_process_path
     build:
-      context: ./
+      context: ./unusual_process_path
       dockerfile: Dockerfile.unusual_process_path
