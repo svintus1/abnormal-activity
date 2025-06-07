@@ -1,0 +1,66 @@
+services:
+  clear_command_history:
+    container_name: clear_command_history
+    build:
+      context: ./
+      dockerfile: Dockerfile.clear_command_history
+
+  delete_files:
+    container_name: delete_files
+    build:
+      context: ./
+      dockerfile: Dockerfile.delete_files
+
+  hidden_file_and_dir:
+    container_name: hidden_file_and_dir
+    build:
+      context: ./
+      dockerfile: Dockerfile.hidden_file_and_dir
+
+  http_get_request:
+    container_name: http_get_request
+    build:
+      context: ./
+      dockerfile: Dockerfile.http_get_request
+
+  log_clear:
+    container_name: log_clear
+    build:
+      context: ./
+      dockerfile: Dockerfile.log_clear
+
+  path_interception:
+    container_name: path_interception
+    build:
+      context: ./
+      dockerfile: Dockerfile.path_interception
+
+  persist_shell_and_lib:
+    container_name: persist_shell_and_lib
+    build:
+      context: ./
+      dockerfile: Dockerfile.persist_shell_and_lib
+
+  process_extension_anomalies:
+    container_name: process_extension_anomalies
+    build:
+      context: ./
+      dockerfile: Dockerfile.process_extension_anomalies
+
+  pw_search:
+    container_name: pw_search
+    build:
+      context: ./
+      dockerfile: Dockerfile.pw_search
+
+  unusual_parent:
+    container_name: unusual_parent
+    build:
+      context: ./
+      dockerfile: Dockerfile.unusual_parent
+
+  unusual_process_path:
+    container_name: unusual_process_path
+    build:
+      context: ./
+      dockerfile: Dockerfile.unusual_process_path

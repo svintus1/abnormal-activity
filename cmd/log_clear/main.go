@@ -14,24 +14,25 @@ func main() {
 		return
 	}
 	fmt.Printf("%sT1070.002 Clear Linux or Mac System Logs\n", tags.Info)
-	force := *flag.String("--force", "", "Удалить все без уточнения") == "yes"
+	forceFlag := flag.String("force", "", "Удалить все без уточнения")
 	flag.Parse()
-	fmt.Println("Данный скрипт рекурсивно удалит директории /var/log и /run/log")
-	fmt.Print("Если вы согласны с этим, что напишите yes: ")
-	var userInput string
-	fmt.Scan(&userInput)
+	force := *forceFlag == "yes"
 	if !force {
+		fmt.Println("Данный скрипт рекурсивно удалит директории /var/log и /run/log")
+		fmt.Print("Если вы согласны с этим, что напишите yes: ")
+		var userInput string
+		fmt.Scan(&userInput)
 		if userInput != "yes" {
 			return
 		}
 	}
 	err := os.RemoveAll("/var/log")
 	if err != nil {
-		fmt.Printf("%sошибка при удалении /var/log: %s", tags.Err, err.Error())
+		fmt.Printf("%sошибка при удалении /var/log: %s\n", tags.Err, err.Error())
 	}
 	err = os.RemoveAll("/run/log")
 	if err != nil {
-		fmt.Printf("%sошибка при удалении /run/log: %s", tags.Err, err.Error())
+		fmt.Printf("%sошибка при удалении /run/log: %s\n", tags.Err, err.Error())
 	}
-	fmt.Printf("%sСкрипт завершил свою работу", tags.Info)
+	fmt.Printf("%sСкрипт завершил свою работу\n", tags.Info)
 }

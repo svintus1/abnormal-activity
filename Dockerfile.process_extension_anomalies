@@ -1,0 +1,12 @@
+FROM golang:1.24.3-alpine AS build
+WORKDIR /opt/app
+COPY ./pkg ./pkg
+COPY ./go.mod ./go.mod
+COPY ./cmd/process_extension_anomalies/main.go ./cmd/process_extension_anomalies/main.go
+RUN go build -o process_extension_anomalies ./cmd/process_extension_anomalies/main.go
+
+FROM debian:bookworm
+WORKDIR /opt/app
+COPY ./assets/myapp ./assets/myapp
+COPY --from=build /opt/app/process_extension_anomalies ./process_extension_anomalies
+ENTRYPOINT [ "./process_extension_anomalies" ]

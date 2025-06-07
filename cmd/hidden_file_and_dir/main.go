@@ -28,7 +28,7 @@ func main() {
 	}
 	filePath := filepath.Join(hiddenDir, "."+fileName)
 	fmt.Printf("%sУспешно создана директория%s\n", tags.Info, hiddenDir)
-	err = system.CopyFile(filepath.Join("assets", fileName), filePath, 0644)
+	err = system.CopyFile(filepath.Join("assets", fileName), filePath, 0755)
 	if err != nil {
 		fmt.Printf("%sОшибка при копировании файла %s: %s\n", tags.Err, fileName, err.Error())
 		return

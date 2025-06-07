@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"script/pkg/files"
 	"script/pkg/system"
@@ -31,7 +32,8 @@ func main() {
 	if err != nil {
 		fmt.Printf("%s%s\n", tags.Err, err.Error())
 	}
-	fmt.Println(os.Getenv("LD_PRELOAD"))
+	out, _ := exec.Command("id").Output()
+	fmt.Println(string(out))
 }
 
 func editProfileFile() error {
