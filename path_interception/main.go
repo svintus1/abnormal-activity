@@ -31,7 +31,7 @@ func main() {
 		if err != nil {
 			fmt.Printf("%sОшибка при удалении %s: %s\n", tags.Log, fakeCmdPath, err.Error())
 		} else {
-			fmt.Printf("%sФайл %s успешно удален", tags.Log, fakeCmdPath)
+			fmt.Printf("%sФайл %s успешно удален\n", tags.Log, fakeCmdPath)
 		}
 	}()
 	system.UpdatePath([]string{newDir})
@@ -40,7 +40,7 @@ func main() {
 		fmt.Printf("%sОшибка при копировании файла %s: %s\n", tags.Err, fileName, err.Error())
 		return
 	}
-	fmt.Printf("%sФайл %s успешно скопирован в %s", tags.Info, fileName, fakeCmdPath)
+	fmt.Printf("%sФайл %s успешно скопирован в %s\n", tags.Info, fileName, fakeCmdPath)
 	out, err := exec.Command("su").Output()
 	if err != nil {
 		fmt.Printf("%s%s\n", tags.Err, err.Error())
