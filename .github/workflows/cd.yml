@@ -1,1 +1,16 @@
+name: Доставка проекта на тестовый сервер
 
+on:
+  push:
+    branches: [ main ]
+    
+jobs:
+  build:
+    runs-on: [ self-hosted ]
+    steps:
+      - name: Синхронизация проекта с репозиторием
+        uses: actions/checkout@v4
+
+      - name: Копирование акутальной версии проекта в удобную директорию
+        run: |
+          rsync -a --delete ${{ github.workspace }} /home/user/abnormal-activity
