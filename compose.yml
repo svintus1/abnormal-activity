@@ -1,66 +1,44 @@
 services:
   clear_command_history:
     container_name: clear_command_history
-    build:
-      context: ./clear_command_history
-      dockerfile: Dockerfile.clear_command_history
+    image: clear_command_history:latest
 
   delete_files:
     container_name: delete_files
-    build:
-      context: ./delete_files
-      dockerfile: Dockerfile.delete_files
+    image: delete_files:latest
 
   hidden_file_and_dir:
     container_name: hidden_file_and_dir
-    build:
-      context: ./hidden_file_and_dir
-      dockerfile: Dockerfile.hidden_file_and_dir
+    image: hidden_file_and_dir:latest
 
   http_get_request:
     container_name: http_get_request
-    build:
-      context: ./http_get_request
-      dockerfile: Dockerfile.http_get_request
+    image: http_get_request:latest
 
   log_clear:
     container_name: log_clear
-    build:
-      context: ./log_clear
-      dockerfile: Dockerfile.log_clear
+    image: log_clear:latest
 
   path_interception:
     container_name: path_interception
-    build:
-      context: ./path_interception
-      dockerfile: Dockerfile.path_interception
+    image: path_interception:latest
 
   persist_shell_and_lib:
     container_name: persist_shell_and_lib
-    build:
-      context: ./persist_shell_and_lib
-      dockerfile: Dockerfile.persist_shell_and_lib
+    image: persist_shell_and_lib:latest
 
   process_extension_anomalies:
     container_name: process_extension_anomalies
-    build:
-      context: ./process_extension_anomalies
-      dockerfile: Dockerfile.process_extension_anomalies
+    image: process_extension_anomalies:latest
 
   pw_search:
     container_name: pw_search
-    build:
-      context: ./pw_search
-      dockerfile: Dockerfile.pw_search
+    image: pw_search:latest
 
   unusual_parent:
     container_name: unusual_parent
-    build:
-      context: ./unusual_parent
-      dockerfile: Dockerfile.unusual_parent
+    image: unusual_parent:latest
 
   unusual_process_path:
     container_name: unusual_process_path
-    build:
-      context: ./unusual_process_path
-      dockerfile: Dockerfile.unusual_process_path
+    image: unusual_process_path:latest
