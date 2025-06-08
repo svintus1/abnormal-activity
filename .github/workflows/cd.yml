@@ -16,9 +16,14 @@ jobs:
           rsync -a --delete ${{ github.workspace }} /home/user/
 
   deploy:
+    needs: delivery
     runs-on: [ centos ]
     steps:
       - name: Сборка и развертывание всех контейнеров
         run: |
           cd /home/user/abnormal-activity
-          docker compose up --build
+          for service in $(docker compose config --services); do
+            echo "Запускаю $service..."
+            docker compose up -d "$service"
+            sleep 2  # при необходимости — пауза между сервисами
+          done
