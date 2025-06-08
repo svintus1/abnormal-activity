@@ -74,8 +74,8 @@ target "unusual_parent" {
   tags = ["unusual_parent:latest"]
 }
 
-target "unusual_process_pat" {
-  context = "./unusual_process_pat"
-  dockerfile = "Dockerfile.unusual_process_pat"
-  tags = ["unusual_process_pat:latest"]
+target "unusual_process_path" {
+  context = "./unusual_process_path"
+  dockerfile = "Dockerfile.unusual_process_path"
+  tags = ["unusual_process_path:latest"]
 }
