@@ -10,7 +10,7 @@ group "default" {
     "process_extension_anomalies",
     "pw_search",
     "unusual_parent",
-    "unusual_process_pat"
+    "unusual_process_path"
   ]
 }
 
