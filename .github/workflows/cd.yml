@@ -3,10 +3,10 @@ name: Доставка проекта на тестовый сервер
 on:
   push:
     branches: [ main, develop ]
-    
+
 jobs:
-  delivery:
-    runs-on: [ self-hosted ]
+  build:
+    runs-on: [ self-hosted, centos ]
     steps:
       - name: Синхронизация проекта с репозиторием
         uses: actions/checkout@v4
@@ -14,3 +14,20 @@ jobs:
       - name: Копирование акутальной версии проекта в удобную директорию
         run: |
           rsync -a --delete ${{ github.workspace }} /home/user/
+
+      - name: Сборка всего проекта
+        run: |
+          cd /home/user/abnormal-activity
+          docker buildx bake
+
+  deploy:
+    needs: build
+    runs-on: [ centos ]
+    steps:
+      - name: Сборка и развертывание всех контейнеров
+        run: |
+          cd /home/user/abnormal-activity
+          for service in $(docker compose config --services); do
+            echo "Запускаю $service..."
+            docker compose up "$service" --build
+          done
