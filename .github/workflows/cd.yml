@@ -24,6 +24,5 @@ jobs:
           cd /home/user/abnormal-activity
           for service in $(docker compose config --services); do
             echo "Запускаю $service..."
-            docker compose up -d "$service"
-            sleep 2  # при необходимости — пауза между сервисами
+            docker compose up "$service" --build
           done
