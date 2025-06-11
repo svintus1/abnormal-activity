@@ -2,16 +2,14 @@ name: Доставка проекта на тестовый сервер
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ main, develop ]
 
 jobs:
   build:
-    runs-on: [ self-hosted, centos ]
+    runs-on: [ self-hosted ]
     steps:
       - name: Синхронизация проекта с репозиторием
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Копирование акутальной версии проекта в удобную директорию
         run: |
