@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: [ self-hosted ]
+    runs-on: [ centos ]
     steps:
       - name: Синхронизация проекта с репозиторием
         uses: actions/checkout@v4
