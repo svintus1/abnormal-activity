@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Синхронизация проекта с репозиторием
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
 
       - name: Копирование акутальной версии проекта в удобную директорию
         run: |
@@ -17,8 +19,8 @@ jobs:
 
       - name: Сборка всего проекта
         run: |
-          cd /home/user/abnormal-activity
           docker buildx bake
+        working-directory: /home/user/abnormal-activity
 
   deploy:
     needs: build
