@@ -8,31 +8,58 @@ import (
 	"script/pkg/tags"
 )
 
+var (
+	logDirs = []string{
+		"/var/log",
+		"/run/log",
+	}
+)
+
 func main() {
 	if !system.IsRoot() {
 		fmt.Printf("%sThe script must be run using root permissions\n", tags.Err)
 		return
 	}
+
 	fmt.Printf("%sT1070.002 Clear Linux or Mac System Logs\n", tags.Info)
-	forceFlag := flag.String("force", "", "Удалить все без уточнения")
+
+	force := parseForceFlag()
+	if !confirmAction(force) {
+		return
+	}
+
+	deleteLogDirs()
+
+	fmt.Printf("%sThe script has completed its work\n", tags.Info)
+}
+
+func parseForceFlag() bool {
+	forceFlag := flag.String("force", "", "Force delete")
 	flag.Parse()
-	force := *forceFlag == "yes"
-	if !force {
-		fmt.Println("Данный скрипт рекурсивно удалит директории /var/log и /run/log")
-		fmt.Print("Если вы согласны с этим, что напишите yes: ")
-		var userInput string
-		fmt.Scan(&userInput)
-		if userInput != "yes" {
-			return
+	return *forceFlag == "yes"
+}
+
+func confirmAction(force bool) bool {
+	if force {
+		return true
+	}
+
+	fmt.Println("This script will recursively delete the directories /var/log and /run/log")
+	fmt.Print("If you agree with this you will write \"yes\": ")
+
+	var userInput string
+	fmt.Scan(&userInput)
+
+	return userInput == "yes"
+}
+
+func deleteLogDirs() {
+	for _, dir := range logDirs {
+		err := os.RemoveAll(dir)
+		if err != nil {
+			fmt.Printf("%sError when deleting %s: %s\n", tags.Log, dir, err.Error())
+		} else {
+			fmt.Printf("%sDeleted directory %s\n", tags.Log, dir)
 		}
 	}
-	err := os.RemoveAll("/var/log")
-	if err != nil {
-		fmt.Printf("%sошибка при удалении /var/log: %s\n", tags.Err, err.Error())
-	}
-	err = os.RemoveAll("/run/log")
-	if err != nil {
-		fmt.Printf("%sошибка при удалении /run/log: %s\n", tags.Err, err.Error())
-	}
-	fmt.Printf("%sСкрипт завершил свою работу\n", tags.Info)
 }

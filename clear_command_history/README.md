@@ -13,11 +13,13 @@ MITRE ATT&CK - T1070.003 Clear Command History
 
 ## Сборка
 
-Команда для сборки - go build -o clear_command_history ./main.go.
+Команда для сборки:
+go build -o clear_command_history ./main.go.
 
 ## Запуск
 
-Команда для запуска -  ./clear_command_history.
+Команда для запуска:
+./clear_command_history.
 
 ## Требования
 

@@ -33,7 +33,6 @@ func main() {
 		fmt.Printf("%sError when writing to a file: %s\n", tags.Err, err)
 		return
 	}
-
 	fmt.Printf("%sThe contents of the configurations are written to a temporary file %s\n", tags.Info, tempFile.Name())
 }
 

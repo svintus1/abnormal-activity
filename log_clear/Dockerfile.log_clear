@@ -9,3 +9,4 @@ FROM debian:bookworm
 WORKDIR /opt/app
 COPY --from=build /opt/app/log_clear ./log_clear
 ENTRYPOINT [ "./log_clear" ]
+CMD [ "--force=yes" ]
