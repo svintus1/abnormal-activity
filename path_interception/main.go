@@ -44,6 +44,7 @@ func main() {
 		return
 	}
 	fmt.Print(string(out))
+	fmt.Printf("%sThe %s command was successfully executed\n", tags.Info, fakeCmd)
 }
 
 func createDir(tempDirPath string) {
