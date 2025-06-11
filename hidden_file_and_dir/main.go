@@ -26,7 +26,7 @@ func main() {
 	fmt.Printf("%sT1564.001 Hidden Files and Directories\n", tags.Info)
 
 	createDirectory()
-	defer deleteDirectory(hiddenDir)
+	defer deleteDirectory()
 
 	err := system.CopyFile(filePath, hiddenFilePath, 0755)
 	if err != nil {
@@ -62,11 +62,11 @@ func createDirectory() {
 	}
 }
 
-func deleteDirectory(path string) {
-	err := os.RemoveAll(path)
+func deleteDirectory() {
+	err := os.RemoveAll(hiddenDir)
 	if err != nil {
-		fmt.Printf("%sError when deleting a directory %s: %s\n", tags.Log, path, err.Error())
+		fmt.Printf("%sError when deleting a directory %s: %s\n", tags.Log, hiddenDir, err.Error())
 	} else {
-		fmt.Printf("%sDirectory %s recursively deleted\n", tags.Log, path)
+		fmt.Printf("%sDirectory %s recursively deleted\n", tags.Log, hiddenDir)
 	}
 }
