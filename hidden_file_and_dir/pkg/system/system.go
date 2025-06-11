@@ -177,7 +177,7 @@ func CopyFile(path string, newPath string, perm os.FileMode) error {
 	}
 	err = os.WriteFile(newPath, content, perm)
 	if err != nil {
-		return fmt.Errorf("ошибка при записи в файл %s: %s", path, err.Error())
+		return fmt.Errorf("ошибка при записи в файл %s: %s", newPath, err.Error())
 	}
 	return nil
 }

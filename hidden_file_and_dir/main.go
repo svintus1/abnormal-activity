@@ -25,7 +25,8 @@ func main() {
 
 	fmt.Printf("%sT1564.001 Hidden Files and Directories\n", tags.Info)
 
-	createTemporaryDirectory()
+	createDirectory()
+	defer deleteDirectory(hiddenDir)
 
 	err := system.CopyFile(filePath, hiddenFilePath, 0755)
 	if err != nil {
@@ -52,13 +53,12 @@ func getFilePath() string {
 	return filepath.Join("assets", fileName)
 }
 
-func createTemporaryDirectory() {
+func createDirectory() {
 	err := os.Mkdir(hiddenDir, 0755)
 	if err != nil {
 		fmt.Printf("%sError when creating a directory %s: %s\n", tags.Log, hiddenDir, err.Error())
 	} else {
 		fmt.Printf("%sA directory has been created %s\n", tags.Log, hiddenDir)
-		defer deleteDirectory(hiddenDir)
 	}
 }
 
