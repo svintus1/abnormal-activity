@@ -2,51 +2,41 @@ services:
   clear_command_history:
     container_name: clear_command_history
     image: clear_command_history:latest
-    image: clear_command_history:latest
 
   delete_files:
     container_name: delete_files
-    image: delete_files:latest
     image: delete_files:latest
 
   hidden_file_and_dir:
     container_name: hidden_file_and_dir
     image: hidden_file_and_dir:latest
-    image: hidden_file_and_dir:latest
 
   http_get_request:
     container_name: http_get_request
-    image: http_get_request:latest
     image: http_get_request:latest
 
   log_clear:
     container_name: log_clear
     image: log_clear:latest
-    image: log_clear:latest
 
   path_interception:
     container_name: path_interception
-    image: path_interception:latest
     image: path_interception:latest
 
   persist_shell_and_lib:
     container_name: persist_shell_and_lib
     image: persist_shell_and_lib:latest
-    image: persist_shell_and_lib:latest
 
   process_extension_anomalies:
     container_name: process_extension_anomalies
-    image: process_extension_anomalies:latest
     image: process_extension_anomalies:latest
 
   pw_search:
     container_name: pw_search
     image: pw_search:latest
-    image: pw_search:latest
 
   unusual_parent:
     container_name: unusual_parent
-    image: unusual_parent:latest
     image: unusual_parent:latest
 
   unusual_process_path:
