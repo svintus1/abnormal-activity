@@ -23,9 +23,9 @@ services:
     container_name: path_interception
     image: path_interception:latest
 
-  persist_shell_and_lib:
-    container_name: persist_shell_and_lib
-    image: persist_shell_and_lib:latest
+  preload_injection:
+    container_name: preload_injection
+    image: preload_injection:latest
 
   process_extension_anomalies:
     container_name: process_extension_anomalies

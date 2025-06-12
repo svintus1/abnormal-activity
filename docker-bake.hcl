@@ -6,7 +6,7 @@ group "default" {
     "http_get_request",
     "log_clear",
     "path_interception",
-    "persist_shell_and_lib",
+    "preload_injection",
     "process_extension_anomalies",
     "pw_search",
     "masquerade_task",
@@ -50,10 +50,10 @@ target "path_interception" {
   tags = ["path_interception:latest"]
 }
 
-target "persist_shell_and_lib" {
-  context = "./persist_shell_and_lib"
-  dockerfile = "Dockerfile.persist_shell_and_lib"
-  tags = ["persist_shell_and_lib:latest"]
+target "preload_injection" {
+  context = "./preload_injection"
+  dockerfile = "Dockerfile.preload_injection"
+  tags = ["preload_injection:latest"]
 }
 
 target "process_extension_anomalies" {
