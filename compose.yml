@@ -34,6 +34,8 @@ services:
   pw_search:
     container_name: pw_search
     image: pw_search:latest
+    volumes:
+      - /:/host
 
   masquerade_task:
     container_name: masquerade_task

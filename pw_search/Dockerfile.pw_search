@@ -9,4 +9,4 @@ FROM debian:bookworm
 WORKDIR /opt/app
 COPY --from=build /opt/app/pw_search ./pw_search
 ENTRYPOINT [ "./pw_search" ]
-CMD [ "--src=/" ]
+CMD [ "--rootfs=/" ]
