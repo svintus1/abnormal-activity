@@ -14,7 +14,7 @@ import (
 
 var (
 	searchWord    = "password"
-	searchDirs    = []string{"/home", "/etc", "/root", "/opt", "/tmp", "/mnt", "/media"}
+	searchDirs    = []string{"home", "etc", "root", "opt", "tmp", "mnt", "media"}
 	searchedFiles = []string{}
 )
 
@@ -24,12 +24,13 @@ func main() {
 		return
 	}
 
-	rootFS, err := parseRootFS()
-	if err != nil {
-		fmt.Printf("%sParsing error: %s\n", tags.Err, err.Error())
-		return
-	}
+	rootFS, _ := parseRootFS()
+	// if err != nil {
+	// 	fmt.Printf("%sParsing error: %s\n", tags.Err, err.Error())
+	// 	return
+	// }
 
+	rootFS = "/etc"
 	fmt.Printf("%sT1552.001 Credentials In Files\n", tags.Info)
 
 	var wg sync.WaitGroup
