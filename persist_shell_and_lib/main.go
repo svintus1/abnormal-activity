@@ -40,7 +40,9 @@ func main() {
 	err = writeLibPathToLdPreload(newLibPath)
 	if err != nil {
 		fmt.Printf("%sError when changing environment variable LD_PRELOAD: %s\n", tags.Err, err.Error())
+		return
 	}
+	fmt.Printf("%sThe LD_PRELOAD environment variable has been changed\n", tags.Info)
 
 	err = addScriptToProfile(script)
 	if err != nil {
