@@ -24,13 +24,12 @@ func main() {
 		return
 	}
 
-	rootFS, _ := parseRootFS()
-	// if err != nil {
-	// 	fmt.Printf("%sParsing error: %s\n", tags.Err, err.Error())
-	// 	return
-	// }
+	rootFS, err := parseRootFS()
+	if err != nil {
+		fmt.Printf("%sParsing error: %s\n", tags.Err, err.Error())
+		return
+	}
 
-	rootFS = "/etc"
 	fmt.Printf("%sT1552.001 Credentials In Files\n", tags.Info)
 
 	var wg sync.WaitGroup
