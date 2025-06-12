@@ -31,13 +31,14 @@ func main() {
 		return
 	}
 	defer deleteFile(newFilePath)
+	fmt.Printf("%sFile %s successfully copied to %s\n", tags.Log, filePath, newFilePath)
 
 	err = launchExecFile(newFilePath)
 	if err != nil {
-		fmt.Printf("%sError when executing a binary file %s: %s\n", tags.Err, filePath, err.Error())
+		fmt.Printf("%sError when executing a binary file %s: %s\n", tags.Err, newFilePath, err.Error())
 		return
 	}
-	fmt.Printf("%sFile %s successfully launched\n", tags.Log, filePath)
+	fmt.Printf("%sFile %s successfully launched\n", tags.Log, newFilePath)
 }
 
 func deleteFile(filePath string) {
