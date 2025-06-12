@@ -26,8 +26,8 @@ jobs:
     steps:
       - name: Сборка и развертывание всех контейнеров
         run: |
-          cd /home/user/abnormal-activity
           for service in $(docker compose config --services); do
             echo "Запускаю $service..."
             docker compose up "$service" --build
           done
+        working-directory: /home/user/abnormal-activity

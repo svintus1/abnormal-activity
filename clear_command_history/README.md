@@ -23,5 +23,6 @@ go build -o clear_command_history ./main.go.
 
 ## Требования
 
-1. Golang 1.24.2 и выше.
+1. Golang 1.20 и выше.
 2. Запуск от имени суперпользователя.
+3. Наличие файла `assets/.bash_history`.

@@ -25,5 +25,5 @@ go build -o sensitive_config_dump ./main.go
 
 ## Требования
 
-1. Golang 1.24.2 и выше.
+1. Golang 1.20 и выше.
 2. Запуск от имени суперпользователя.

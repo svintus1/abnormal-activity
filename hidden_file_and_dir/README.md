@@ -23,5 +23,6 @@ MITRE ATT&CK – T1564.001 Hidden Files and Directories.
 
 ## Требования
 
-1. Golang 1.24.2 и выше.
+1. Golang 1.20 и выше.
 2. Запуск от имени суперпользователя.
+3. Наличие исполняемого файла `assets/myapp`.
