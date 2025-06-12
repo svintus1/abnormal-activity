@@ -44,7 +44,7 @@ func main() {
 
 	printHeadOfSeachedFiles()
 
-	fmt.Println("The script executed successfully")
+	fmt.Printf("%sThe script executed successfully\n", tags.Info)
 }
 
 func parseRootFS() (string, error) {
