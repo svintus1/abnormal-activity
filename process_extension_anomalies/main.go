@@ -10,34 +10,38 @@ import (
 )
 
 var (
-	execFileName = "myapp"
+	fileName   = "myapp"
+	extensions = []string{".png", ".txt", ".com", ".scr", ".cmd"}
 )
 
 func main() {
+	filePath := filepath.Join("assets", fileName)
+
 	if !system.IsRoot() {
 		fmt.Printf("%sThe script must be run using root permissions\n", tags.Err)
 		return
 	}
+
 	fmt.Printf("%sT1036.008  Masquerade File Type\n", tags.Info)
-	extensions := []string{".png", ".txt", ".com", ".scr", ".cmd"}
+
 	for _, extension := range extensions {
-		newFileName := execFileName + extension
-		copyFileWithLogs(newFileName)
-		execCommandWithLogs(newFileName)
-		defer removeFileWithLogs(newFileName)
+		newFileName := filePath + extension
+		copyFile(filePath, newFileName)
+		execCommand(newFileName)
+		removeFile(newFileName)
 	}
 }
 
-func copyFileWithLogs(fileName string) {
-	err := system.CopyFile(filepath.Join("assets", execFileName), fileName, 0755)
+func copyFile(filePath string, fileName string) {
+	err := system.CopyFile(filePath, fileName, 0755)
 	if err != nil {
-		fmt.Printf("%sError while copying a %s: %s\n", tags.Log, execFileName, err.Error())
+		fmt.Printf("%sError while copying a %s: %s\n", tags.Log, filePath, err.Error())
 	} else {
-		fmt.Printf("%sSuccessfully copied %s\n", tags.Log, execFileName)
+		fmt.Printf("%sSuccessfully copied %s\n", tags.Log, fileName)
 	}
 }
 
-func execCommandWithLogs(fileName string) {
+func execCommand(fileName string) {
 	err := exec.Command("./" + fileName).Run()
 	if err != nil {
 		fmt.Printf("%sError while executing a %s: %s\n", tags.Log, fileName, err.Error())
@@ -46,7 +50,7 @@ func execCommandWithLogs(fileName string) {
 	}
 }
 
-func removeFileWithLogs(fileName string) {
+func removeFile(fileName string) {
 	err := os.Remove(fileName)
 	if err != nil {
 		fmt.Printf("%sError when deleting a %s: %s\n", tags.Log, fileName, err.Error())

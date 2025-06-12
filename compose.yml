@@ -23,9 +23,9 @@ services:
     container_name: path_interception
     image: path_interception:latest
 
-  persist_shell_and_lib:
-    container_name: persist_shell_and_lib
-    image: persist_shell_and_lib:latest
+  preload_injection:
+    container_name: preload_injection
+    image: preload_injection:latest
 
   process_extension_anomalies:
     container_name: process_extension_anomalies
@@ -34,10 +34,12 @@ services:
   pw_search:
     container_name: pw_search
     image: pw_search:latest
+    volumes:
+      - /:/host
 
-  unusual_parent:
-    container_name: unusual_parent
-    image: unusual_parent:latest
+  masquerade_task:
+    container_name: masquerade_task
+    image: masquerade_task:latest
 
   unusual_process_path:
     container_name: unusual_process_path

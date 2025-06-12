@@ -3,10 +3,10 @@ WORKDIR /opt/app
 COPY ./pkg ./pkg
 COPY ./go.mod ./go.mod
 COPY ./main.go ./main.go
-RUN go build -o persist_shell_and_lib ./main.go
+RUN go build -o preload_injection ./main.go
 
 FROM debian:bookworm
 WORKDIR /opt/app
 COPY ./assets/preload.so ./assets/preload.so
-COPY --from=build /opt/app/persist_shell_and_lib ./persist_shell_and_lib
-ENTRYPOINT [ "./persist_shell_and_lib" ]
+COPY --from=build /opt/app/preload_injection ./preload_injection
+ENTRYPOINT [ "./preload_injection" ]

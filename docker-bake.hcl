@@ -6,10 +6,10 @@ group "default" {
     "http_get_request",
     "log_clear",
     "path_interception",
-    "persist_shell_and_lib",
+    "preload_injection",
     "process_extension_anomalies",
     "pw_search",
-    "unusual_parent",
+    "masquerade_task",
     "unusual_process_path"
   ]
 }
@@ -50,10 +50,10 @@ target "path_interception" {
   tags = ["path_interception:latest"]
 }
 
-target "persist_shell_and_lib" {
-  context = "./persist_shell_and_lib"
-  dockerfile = "Dockerfile.persist_shell_and_lib"
-  tags = ["persist_shell_and_lib:latest"]
+target "preload_injection" {
+  context = "./preload_injection"
+  dockerfile = "Dockerfile.preload_injection"
+  tags = ["preload_injection:latest"]
 }
 
 target "process_extension_anomalies" {
@@ -68,10 +68,10 @@ target "pw_search" {
   tags = ["pw_search:latest"]
 }
 
-target "unusual_parent" {
-  context = "./unusual_parent"
-  dockerfile = "Dockerfile.unusual_parent"
-  tags = ["unusual_parent:latest"]
+target "masquerade_task" {
+  context = "./masquerade_task"
+  dockerfile = "Dockerfile.masquerade_task"
+  tags = ["masquerade_task:latest"]
 }
 
 target "unusual_process_path" {
