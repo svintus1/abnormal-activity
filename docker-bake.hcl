@@ -68,10 +68,10 @@ target "pw_search" {
   tags = ["pw_search:latest"]
 }
 
-target "unusual_parent" {
-  context = "./unusual_parent"
-  dockerfile = "Dockerfile.unusual_parent"
-  tags = ["unusual_parent:latest"]
+target "masquerade_task" {
+  context = "./masquerade_taskt"
+  dockerfile = "Dockerfile.masquerade_task"
+  tags = ["masquerade_task:latest"]
 }
 
 target "unusual_process_path" {
