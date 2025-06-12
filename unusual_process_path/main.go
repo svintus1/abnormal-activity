@@ -30,26 +30,22 @@ func main() {
 		fmt.Printf("%sError when copying a binary file\n", tags.Err)
 		return
 	}
+	fmt.Printf("%sFile %s successfully copied to %s\n", tags.Info, filePath, newFilePath)
 	defer deleteFile(newFilePath)
-	fmt.Printf("%sFile %s successfully copied to %s\n", tags.Log, filePath, newFilePath)
 
-	err = launchExecFile(newFilePath)
+	err = exec.Command(newFilePath).Run()
 	if err != nil {
 		fmt.Printf("%sError when executing a binary file %s: %s\n", tags.Err, newFilePath, err.Error())
 		return
 	}
-	fmt.Printf("%sFile %s successfully launched\n", tags.Log, newFilePath)
+	fmt.Printf("%sFile %s successfully launched\n", tags.Info, newFilePath)
 }
 
 func deleteFile(filePath string) {
-	os.Remove(filePath)
-	fmt.Printf("%sFile %s removed\n", tags.Log, filePath)
-}
-
-func launchExecFile(filePath string) error {
-	err := exec.Command(filePath).Run()
+	err := os.Remove(filePath)
 	if err != nil {
-		return fmt.Errorf("error when executing file %s: %s", filePath, err.Error())
+		fmt.Printf("%sError when deleting file %s: %s\n", tags.Log, filePath, err.Error())
+	} else {
+		fmt.Printf("%sFile %s removed\n", tags.Log, filePath)
 	}
-	return nil
 }
