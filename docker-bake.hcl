@@ -9,7 +9,7 @@ group "default" {
     "persist_shell_and_lib",
     "process_extension_anomalies",
     "pw_search",
-    "unusual_parent",
+    "masquerade_task",
     "unusual_process_path"
   ]
 }
