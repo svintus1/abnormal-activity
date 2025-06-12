@@ -56,7 +56,7 @@ func payloadHandler(filePath string) http.HandlerFunc {
 		file, err := os.Open(filePath)
 		if err != nil {
 			http.Error(w, "File not found\n", http.StatusNotFound)
-			fmt.Printf("%sError opening file %s: %s", tags.Err, filePath, err)
+			fmt.Printf("%sError opening file %s: %s\n", tags.Err, filePath, err)
 			return
 		}
 		defer file.Close()
