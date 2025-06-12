@@ -69,7 +69,7 @@ target "pw_search" {
 }
 
 target "masquerade_task" {
-  context = "./masquerade_taskt"
+  context = "./masquerade_task"
   dockerfile = "Dockerfile.masquerade_task"
   tags = ["masquerade_task:latest"]
 }
