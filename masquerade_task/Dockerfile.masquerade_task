@@ -3,10 +3,10 @@ WORKDIR /opt/app
 COPY ./pkg ./pkg
 COPY ./go.mod ./go.mod
 COPY ./main.go ./main.go
-RUN go build -o unusual_parent ./main.go
+RUN go build -o masquerade_task ./main.go
 
 FROM debian:bookworm
 WORKDIR /opt/app
 COPY ./assets/myapp ./assets/myapp
-COPY --from=build /opt/app/unusual_parent ./unusual_parent
-ENTRYPOINT [ "./unusual_parent" ]
+COPY --from=build /opt/app/masquerade_task ./masquerade_task
+ENTRYPOINT [ "./masquerade_task" ]
