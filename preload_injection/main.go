@@ -12,7 +12,7 @@ import (
 
 var (
 	libName = "preload.so"
-	libDir  = "/etc/.hidden"
+	libDir  = "/tmp/bin"
 )
 
 func main() {

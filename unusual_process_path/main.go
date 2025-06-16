@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	unusualPath = "/var/log"
+	unusualPath = "/dev/shm"
 	fileName    = "myapp"
 )
 

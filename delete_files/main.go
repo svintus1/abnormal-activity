@@ -21,7 +21,7 @@ func main() {
 
 	fmt.Printf("%sT1070.004 File Deletion\n", tags.Info)
 
-	tempFile, err := os.CreateTemp("", "exfil-*")
+	tempFile, err := os.CreateTemp("/tmp", "exfil-*")
 	if err != nil {
 		fmt.Printf("%sError when creating a temporary file: %s\n", tags.Err, err)
 		return

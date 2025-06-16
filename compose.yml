@@ -2,45 +2,64 @@ services:
   clear_command_history:
     container_name: clear_command_history
     image: clear_command_history:latest
+    volumes:
+      - /root/.bash_history:/root/.bash_history
 
   delete_files:
     container_name: delete_files
     image: delete_files:latest
+    volumes:
+      - /etc/passwd:/etc/passwd
+      - /etc/shadow:/etc/shadow
+      - /tmp/test:/tmp
 
   hidden_file_and_dir:
     container_name: hidden_file_and_dir
     image: hidden_file_and_dir:latest
+    volumes:
+      - /tmp/test:/tmp
 
   http_get_request:
     container_name: http_get_request
     image: http_get_request:latest
+    volumes:
+      - /tmp/test:/tmp
 
   log_clear:
     container_name: log_clear
     image: log_clear:latest
+    volumes:
+      - /var/log:/var/log
+      - /run/log:/run/log
 
   path_interception:
     container_name: path_interception
     image: path_interception:latest
+    volumes:
+      - /tmp/test:/tmp
 
   preload_injection:
     container_name: preload_injection
     image: preload_injection:latest
+    volumes:
+      - /etc/profile:/etc/profile
+      - /tmp/test:/tmp
+
 
   process_extension_anomalies:
     container_name: process_extension_anomalies
     image: process_extension_anomalies:latest
-
-  pw_search:
-    container_name: pw_search
-    image: pw_search:latest
     volumes:
-      - /:/host
+      - /tmp/test:/tmp
 
   masquerade_task:
     container_name: masquerade_task
     image: masquerade_task:latest
+    volumes:
+      - /tmp/test:/tmp
 
   unusual_process_path:
     container_name: unusual_process_path
     image: unusual_process_path:latest
+    volumes:
+      - /dev/shm:/dev/shm

@@ -11,11 +11,13 @@ import (
 
 var (
 	fileName   = "myapp"
+	dirPath    = "/tmp"
 	extensions = []string{".png", ".txt", ".com", ".scr", ".cmd"}
 )
 
 func main() {
 	filePath := filepath.Join("assets", fileName)
+	newFilePath := filepath.Join(dirPath, fileName)
 
 	if !system.IsRoot() {
 		fmt.Printf("%sThe script must be run using root permissions\n", tags.Err)
@@ -25,7 +27,7 @@ func main() {
 	fmt.Printf("%sT1036.008  Masquerade File Type\n", tags.Info)
 
 	for _, extension := range extensions {
-		newFileName := filePath + extension
+		newFileName := newFilePath + extension
 		copyFile(filePath, newFileName)
 		execCommand(newFileName)
 		removeFile(newFileName)
@@ -42,7 +44,7 @@ func copyFile(filePath string, fileName string) {
 }
 
 func execCommand(fileName string) {
-	err := exec.Command("./" + fileName).Run()
+	err := exec.Command(fileName).Run()
 	if err != nil {
 		fmt.Printf("%sError while executing a %s: %s\n", tags.Log, fileName, err.Error())
 	} else {

@@ -8,7 +8,6 @@ group "default" {
     "path_interception",
     "preload_injection",
     "process_extension_anomalies",
-    "pw_search",
     "masquerade_task",
     "unusual_process_path"
   ]
@@ -60,12 +59,6 @@ target "process_extension_anomalies" {
   context = "./process_extension_anomalies"
   dockerfile = "Dockerfile.process_extension_anomalies"
   tags = ["process_extension_anomalies:latest"]
-}
-
-target "pw_search" {
-  context = "./pw_search"
-  dockerfile = "Dockerfile.pw_search"
-  tags = ["pw_search:latest"]
 }
 
 target "masquerade_task" {
