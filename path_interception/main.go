@@ -50,7 +50,7 @@ func main() {
 func createDir(tempDirPath string) {
 	err := os.Mkdir(tempDirPath, 0755)
 	if err != nil {
-		fmt.Printf("%sError when creating a directory %s:%s\n", tags.Err, tempDirPath, err.Error())
+		fmt.Printf("%sError when creating a directory %s:%s\n", tags.Log, tempDirPath, err.Error())
 	}
 }
 
