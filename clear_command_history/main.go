@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	// newBashHistoryFile  = "assets/.bash_history"
+	newBashHistoryFile  = "assets/.bash_history"
 	rootBashHistoryFile = "/root/.bash_history"
 )
 
@@ -20,11 +20,12 @@ func main() {
 
 	fmt.Printf("%sT1070.003 Clear Command History\n", tags.Info)
 
-	// err := addBashHistoryFile()
-	// if err != nil {
-	// 	fmt.Printf("%sError when coping %s: %s\n", tags.Err, newBashHistoryFile, err.Error())
-	// 	return
-	// }
+	if !isBashHistoryFileExist() {
+		err := addBashHistoryFile()
+		if err != nil {
+			return
+		}
+	}
 
 	err := deleteBashHistory()
 	if err != nil {
@@ -36,14 +37,23 @@ func main() {
 	fmt.Printf("%sScript executed successfully\n", tags.Info)
 }
 
-// func addBashHistoryFile() error {
-// 	err := system.CopyFile(newBashHistoryFile, rootBashHistoryFile, 0600)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	fmt.Printf("%sCopied the file %s to %s\n", tags.Log, newBashHistoryFile, rootBashHistoryFile)
-// 	return nil
-// }
+func isBashHistoryFileExist() bool {
+	info, err := os.Stat(rootBashHistoryFile)
+	if os.IsNotExist(err) || info.IsDir() {
+		return false
+	}
+	return true
+}
+
+func addBashHistoryFile() error {
+	err := system.CopyFile(newBashHistoryFile, rootBashHistoryFile, 0600)
+	if err != nil {
+		fmt.Printf("%sError when coping %s: %s\n", tags.Log, newBashHistoryFile, err.Error())
+		return err
+	}
+	fmt.Printf("%sCopied the file %s to %s\n", tags.Log, newBashHistoryFile, rootBashHistoryFile)
+	return nil
+}
 
 func deleteBashHistory() error {
 	err := os.Remove(rootBashHistoryFile)
