@@ -1,6 +1,5 @@
 group "default" {
   targets = [
-    "clear_command_history",
     "delete_files",
     "hidden_file_and_dir",
     "http_get_request",
@@ -11,12 +10,6 @@ group "default" {
     "masquerade_task",
     "unusual_process_path"
   ]
-}
-
-target "clear_command_history" {
-  context = "./clear_command_history"
-  dockerfile = "Dockerfile.clear_command_history"
-  tags = ["clear_command_history:latest"]
 }
 
 target "delete_files" {

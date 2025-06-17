@@ -1,10 +1,4 @@
 services:
-  clear_command_history:
-    container_name: clear_command_history
-    image: clear_command_history:latest
-    volumes:
-      - /root/.bash_history:/root/.bash_history
-
   delete_files:
     container_name: delete_files
     image: delete_files:latest
