@@ -7,7 +7,8 @@ MITRE ATT&CK - T1070.003 Clear Command History
 ## Что делает скрипт
 
 1. Проверяет, что запущен от root.
-2. Копирует файл assets/.bash_history в /root/.bash_history.
+2. Проверяет существование файла /root/.bash_history.
+2. Если файл не найден, копирует assets/.bash_history в /root/.bash_history.
 3. Удаляет файл /root/.bash_history.
 4. Логирует основные действия и ошибки.
 
